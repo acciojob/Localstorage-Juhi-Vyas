@@ -59,9 +59,16 @@
                     itemsList.append(li)
 
                     checkbox.addEventListener("change", () => {
-                        items[index].status = checkbox.checked
-                        localStorage.setItem("items", JSON.stringify(items))
-                    })
+                      items[index].status = checkbox.checked;
+
+                      if (checkbox.checked) {
+                         checkbox.setAttribute("checked", "checked");
+                      } else {
+                         checkbox.removeAttribute("checked");
+                      }
+
+                    localStorage.setItem("items", JSON.stringify(items));
+});
 
                 })
 
