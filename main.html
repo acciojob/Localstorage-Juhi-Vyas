@@ -27,66 +27,62 @@
 
 <script>
   const addItems = document.querySelector('.add-items');
-  const itemsList = document.querySelector('.plates');
-  const itemInput = document.querySelector('.item');
+        const itemsList = document.querySelector('.plates');
+        const itemInput = document.querySelector('.item');
+        const items = JSON.parse(localStorage.getItem("items")) || []
 
-  // ✅ Load from localStorage
-  let items = JSON.parse(localStorage.getItem("items")) || [];
+        function store() {
 
-  function store() {
-    itemsList.innerHTML = ""; // clear UI
+            itemsList.innerHTML = ""
 
-    items.forEach((item, index) => {
-      let checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = item.status;
+                items.forEach((item, index) => {
 
-      // 🔥 Important for Cypress
-      if (item.status) {
-        checkbox.setAttribute("checked", "checked");
-      } else {
-        checkbox.removeAttribute("checked");
-      }
+                    let checkbox = document.createElement("input")
+                    checkbox.type = "checkbox"
+                    checkbox.id = item.item
+                    checkbox.checked = item.status
 
-      let label = document.createElement("label");
-      label.innerText = item.item;
+					if (item.status) {
+                       checkbox.setAttribute('checked', 'checked');
+                    } else {
+                       checkbox.removeAttribute('checked');
+                    }
 
-      // optional UI improvement
-      if (item.status) {
-        label.style.textDecoration = "line-through";
-      }
+                    let label = document.createElement("label")
+                    label.htmlFor = item.item
+                    label.innerText = item.item
 
-      let li = document.createElement("li");
-      li.append(checkbox, label);
+                    let li = document.createElement("li")
+                    li.append(checkbox, label)
 
-      itemsList.append(li);
+                    itemsList.append(li)
 
-      // ✅ update state + storage
-      checkbox.addEventListener("change", () => {
-        items[index].status = checkbox.checked;
-        localStorage.setItem("items", JSON.stringify(items));
-      });
-    });
-  }
+                    checkbox.addEventListener("change", () => {
+                        items[index].status = checkbox.checked
+                        localStorage.setItem("items", JSON.stringify(items))
+                    })
 
-  addItems.addEventListener("submit", (e) => {
-    e.preventDefault();
+                })
 
-    let newItem = {
-      item: itemInput.value,
-      status: false
-    };
 
-    items.push(newItem);
+            }
 
-    localStorage.setItem("items", JSON.stringify(items));
+        addItems.addEventListener("submit", (e) => {
+            e.preventDefault()
 
-    store();
-    itemInput.value = "";
-  });
 
-  // initial load
-  store();
+            let newItem = { item: itemInput.value, status: false }
+            items.push(newItem)
+
+            localStorage.setItem("items", JSON.stringify(items))
+
+            store()
+
+            itemInput.value = ""
+        })
+
+        store()
+
 </script>
 
 
