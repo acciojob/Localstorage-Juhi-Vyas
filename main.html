@@ -39,8 +39,9 @@
 
                     let checkbox = document.createElement("input")
                     checkbox.type = "checkbox"
-                    checkbox.id = item.item
+                    checkbox.id = `item${i}`
                     checkbox.checked = item.status
+					 checkbox.dataset.index = index;
 
 					if (item.status) {
                        checkbox.setAttribute('checked', 'checked');
@@ -49,7 +50,7 @@
                     }
 
                     let label = document.createElement("label")
-                    label.htmlFor = item.item
+                    label.htmlFor = `item${i}`
                     label.innerText = item.item
 
                     let li = document.createElement("li")
