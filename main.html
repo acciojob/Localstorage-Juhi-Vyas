@@ -41,6 +41,11 @@
                     checkbox.type = "checkbox"
                     checkbox.id = item.item
                     checkbox.checked = item.status
+					
+					if (item.status) {
+                      checkbox.setAttribute("checked", "checked");
+					}
+}
 
                     let label = document.createElement("label")
                     label.htmlFor = item.item
@@ -53,13 +58,7 @@
 
                     checkbox.addEventListener("change", () => {
                         items[index].status = checkbox.checked
-                        if (items[index].status) {
-                            items[index].status = true
-                            localStorage.setItem("items", JSON.stringify(items))
-                            // store()
-                        }else{
-                            items[index].status = false
-                        }
+                        localStorage.setItem("items", JSON.stringify(items))
                     })
 
                 })
