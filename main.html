@@ -39,7 +39,7 @@
 
                     let checkbox = document.createElement("input")
                     checkbox.type = "checkbox"
-                    checkbox.id = `item${i}`
+                    checkbox.id = `item${index}`
                     checkbox.checked = item.status
 					 // checkbox.dataset.index = index;
 
@@ -50,7 +50,7 @@
                     }
 
                     let label = document.createElement("label")
-                    label.htmlFor = `item${i}`
+                    label.htmlFor = `item${index}`
                     label.innerText = item.item
 
                     let li = document.createElement("li")
