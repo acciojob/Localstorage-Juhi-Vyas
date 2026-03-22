@@ -20,15 +20,68 @@
       <li>Loading Storage...</li>
     </ul>
     <form class="add-items">
-      <input type="text" name="item" placeholder="Item Name" required>
+      <input type="text" name="item" placeholder="Item Name" class="item" required>
       <input type="submit" value="+ Add Item">
     </form>
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
-  const itemsList = document.querySelector('.plates');
-  const items = [];
+        const itemsList = document.querySelector('.plates');
+        const itemInput = document.querySelector('.item');
+        const items = JSON.parse(localStorage.getItem("items")) || []
+
+        function store() {
+
+            itemsList.innerHTML = ""
+
+                items.forEach((item, index) => {
+
+                    let checkbox = document.createElement("input")
+                    checkbox.type = "checkbox"
+                    checkbox.id = item.item
+                    checkbox.checked = item.status
+
+                    let label = document.createElement("label")
+                    label.htmlFor = item.item
+                    label.innerText = item.item
+
+                    let li = document.createElement("li")
+                    li.append(checkbox, label)
+
+                    itemsList.append(li)
+
+                    checkbox.addEventListener("change", () => {
+                        items[index].status = checkbox.checked
+                        if (items[index].status) {
+                            items[index].status = true
+                            localStorage.setItem("items", JSON.stringify(items))
+                            // store()
+                        }else{
+                            items[index].status = false
+                        }
+                    })
+
+                })
+
+
+            }
+
+        addItems.addEventListener("submit", (e) => {
+            e.preventDefault()
+
+
+            let newItem = { item: itemInput.value, status: false }
+            items.push(newItem)
+
+            localStorage.setItem("items", JSON.stringify(items))
+
+            store()
+
+            itemInput.value = ""
+        })
+
+        store()
 
 </script>
 
