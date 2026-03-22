@@ -32,36 +32,33 @@
         const items = JSON.parse(localStorage.getItem("items")) || []
 
         function store() {
+    itemsList.innerHTML = "";
 
-            itemsList.innerHTML = ""
+    items.forEach((item, index) => {
 
-                items.forEach((item, index) => {
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = item.status;
 
-                    let checkbox = document.createElement("input")
-                    checkbox.type = "checkbox"
-                    checkbox.id = item.item
-                    checkbox.checked = item.status
-					
-			
+        // 🔥 important for Cypress
+        if (item.status) {
+            checkbox.setAttribute("checked", "checked");
+        }
 
-                    let label = document.createElement("label")
-                    label.htmlFor = item.item
-                    label.innerText = item.item
+        let label = document.createElement("label");
+        label.innerText = item.item;
 
-                    let li = document.createElement("li")
-                    li.append(checkbox, label)
+        let li = document.createElement("li");
+        li.append(checkbox, label);
 
-                    itemsList.append(li)
+        itemsList.append(li);
 
-                    checkbox.addEventListener("change", () => {
-                        items[index].status = checkbox.checked
-                        localStorage.setItem("items", JSON.stringify(items))
-                    })
-
-                })
-
-
-            }
+        checkbox.addEventListener("change", () => {
+            items[index].status = checkbox.checked;
+            localStorage.setItem("items", JSON.stringify(items));
+        });
+    });
+}
 
         addItems.addEventListener("submit", (e) => {
             e.preventDefault()
